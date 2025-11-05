@@ -6,208 +6,240 @@
 
     <!-- 🎨 style css 🎨 -->
     <style>
-      #contenedorExportar p,
-      #contenedorExportar h1,
-      #contenedorExportar h2,
-      #contenedorExportar h3,
-      #contenedorExportar div {
-        page-break-inside: avoid;
-        break-inside: avoid;
-        widows: 2;
-        orphans: 2;
-      }
+     /* 🎨 --- ESTILOS GLOBALES --- 🎨 */
+#contenedorExportar p,
+#contenedorExportar h1,
+#contenedorExportar h2,
+#contenedorExportar h3,
+#contenedorExportar div {
+  page-break-inside: avoid;
+  break-inside: avoid;
+  widows: 2;
+  orphans: 2;
+}
 
-      body {
-        font-family: Arial, sans-serif;
-        padding: 20px;
-        background: #f0f4f8;
-      }
-      input,
-      button {
-        padding: 10px;
-        font-size: 16px;
-        border: 1.5px solid #ccc;
-        border-radius: 6px;
-        margin-right: 10px;
-      }
-      button {
-        background-color: #2563eb;
-        color: white;
-        border: none;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
-      button:hover {
-        background-color: #1e40af;
-      }
-      #resultado {
-        margin-top: 20px;
-        margin-bottom: 10px;
-        background: #e0e7ff;
-        padding: 15px;
-        border-radius: 8px;
-        color: #1e3a8a;
-        font-size: 1.1rem;
-        white-space: pre-wrap;
-        max-height: 130px;
-        overflow-y: auto;
-        /* Opcional: para que el ancho se ajuste */
-        width: 100%;
-        /* Opcional: para que no se expanda más allá de lo que cabe */
-        box-sizing: border-box;
-      }
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: #f0f4f8;
+  max-width: 100%;
+  margin: auto;
+}
 
-      body {
-        font-family: Arial, sans-serif;
-        background: #f5f7fa;
-        padding: 20px;
-        max-width: auto;
-        margin: auto;
-      }
-      h1 {
-        color: #333;
-        text-align: center;
-        margin: 5px 10px;
-      }
-      form {
-        margin-bottom: 20px;
-        background: white;
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-      }
-      input[type="text"],
-      textarea {
-        width: 98.5%;
-        padding: 8px;
-        padding-right: 0;
-        margin-right: 0;
-        margin-top: 6px;
-        margin-bottom: 12px;
-        border: 1.5px solid #ccc;
-        border-radius: 6px;
-        font-size: 16px;
-        resize: vertical;
-      }
-      button {
-        background-color: #2563eb;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        font-size: 12px;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
-      button:hover {
-        background-color: #1e40af;
-      }
-      .nota {
-        background: white;
-        padding: 12px 15px;
-        margin-bottom: 12px;
-        border-radius: 8px;
-        box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-        position: relative;
-      }
-      .nota h3 {
-        margin: 0 0 8px 0;
-        color: #1e3a8a;
-      }
-      .nota p {
-        white-space: pre-wrap;
-        margin: 0;
-        color: #333;
-      }
-      .btn-borrar {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: #dc2626;
-        border: none;
-        color: white;
-        border-radius: 4px;
-        padding: 4px 8px;
-        cursor: pointer;
-        font-size: 14px;
-        transition: background-color 0.3s ease;
-      }
-      .btn-borrar:hover {
-        background: #b91c1c;
-      }
-      #subtituloPrincipal {
-        text-align: center;
-        font-size: 20px;
-        margin: 0;
-        margin-bottom: 20px;
-        color: #333;
-        font-style: italic;
-      }
-      #tituloPrincipal {
-        margin-bottom: 0;
-      }
-      .etiqueta {
-        display: inline-block;
-        padding: 2px 8px;
-        margin-bottom: 5px;
-        border-radius: 12px;
-        font-size: 0.9em;
-        font-weight: bold;
-        color: white;
-      }
+/* --- Inputs y botones --- */
+input,
+button {
+  padding: 10px;
+  font-size: 16px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  margin-right: 10px;
+}
 
-      .etiqueta.versículo {
-        background-color: #4a90e2;
-      }
-      .etiqueta.idea {
-        background-color: #f5a623;
-      }
-      .etiqueta.importante {
-        background-color: #d0021b;
-      }
-      .etiqueta.cita {
-        background-color: #50e3c2;
-      }
-      .etiqueta.pregunta {
-        background-color: #9013fe;
-      }
-      .etiqueta.comentario {
-        background-color: #7ed321;
-      }
-      .etiqueta.conclusión {
-        background-color: #417505;
-      }
-      .flex {
-        display: flex;
-        gap: 20px;
-      }
-      .buscador_versiculo {
-        width: 50vw; /* Ocupa la mitad del ancho de la ventana */
-        max-width: 100%; /* Opcional para evitar que crezca más que su contenedor padre */
-        box-sizing: border-box; /* Para que padding/border no aumenten el ancho */
-      }
-      .barra_lateral {
-        margin: 15px;
-        width: 650px;
-        position: fixed; /* 👈 Esto lo fija en pantalla */
-        top: 0; /* Desde arriba */
-        left: 0; /* Pegado al borde izquierdo */
-        height: 100vh; /* 100% de la altura de la ventana */
-        z-index: 1000; /* Para que quede encima */
-      }
-      .notas_contenido {
-        width: 1000px;
-        margin-left: 670px;
-      }
-      .nota {
-        cursor: move;
-      }
-      .sortable-chosen {
-        box-shadow: 8px 8px 32px #e1e1e1;
-      }
-      .sortable-drag {
-        opacity: 0;
-      }
+button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+button:hover {
+  background-color: #1e40af;
+}
+
+#resultado {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  background: #e0e7ff;
+  padding: 15px;
+  border-radius: 8px;
+  color: #1e3a8a;
+  font-size: 1.1rem;
+  white-space: pre-wrap;
+  max-height: 130px;
+  overflow-y: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* --- Tipografía y estructura general --- */
+h1 {
+  color: #333;
+  text-align: center;
+  margin: 5px 10px;
+}
+
+form {
+  margin-bottom: 20px;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"],
+textarea {
+  width: 98.5%;
+  padding: 8px;
+  margin-top: 6px;
+  margin-bottom: 12px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  resize: vertical;
+}
+
+/* --- Notas --- */
+.nota {
+  background: white;
+  padding: 12px 15px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  cursor: move;
+}
+.nota h3 {
+  margin: 0 0 8px 0;
+  color: #1e3a8a;
+}
+.nota p {
+  white-space: pre-wrap;
+  margin: 0;
+  color: #333;
+}
+.sortable-chosen {
+  box-shadow: 8px 8px 32px #e1e1e1;
+}
+.sortable-drag {
+  opacity: 0;
+}
+
+/* --- Botón borrar --- */
+.btn-borrar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #dc2626;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+.btn-borrar:hover {
+  background: #b91c1c;
+}
+
+/* --- Etiquetas --- */
+.etiqueta {
+  display: inline-block;
+  padding: 2px 8px;
+  margin-bottom: 5px;
+  border-radius: 12px;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: white;
+}
+.etiqueta.versículo {
+  background-color: #4a90e2;
+}
+.etiqueta.idea {
+  background-color: #f5a623;
+}
+.etiqueta.importante {
+  background-color: #d0021b;
+}
+.etiqueta.cita {
+  background-color: #50e3c2;
+}
+.etiqueta.pregunta {
+  background-color: #9013fe;
+}
+.etiqueta.comentario {
+  background-color: #7ed321;
+}
+.etiqueta.conclusión {
+  background-color: #417505;
+}
+
+/* --- Layout principal --- */
+.flex {
+  display: flex;
+  gap: 20px;
+}
+
+.buscador_versiculo {
+  width: 50vw;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.barra_lateral {
+  margin: 15px;
+  width: 650px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.notas_contenido {
+  width: 1000px;
+  margin-left: 670px;
+}
+
+/* --- 📱 ESTILOS RESPONSIVOS PARA CELULARES --- */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  .flex {
+    flex-direction: column;
+  }
+
+  .barra_lateral {
+    position: static; /* ya no fija */
+    width: 100%;
+    height: auto;
+    margin: 0 0 15px 0;
+  }
+
+  .notas_contenido {
+    width: 100%;
+    margin-left: 0; /* elimina el espacio lateral */
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font-size: 15px;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  #resultado {
+    max-height: none;
+  }
+
+  form {
+    padding: 10px;
+  }
+
+  button {
+    padding: 8px;
+  }
+
+  .buscador_versiculo {
+    width: 100%;
+  }
+}
     </style>
   </head>
   <body>
