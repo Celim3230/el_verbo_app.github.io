@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Apuntes predicación</title>
+
+    <!-- 🎨 style css 🎨 -->
+    <style>
+      #contenedorExportar p,
+      #contenedorExportar h1,
+      #contenedorExportar h2,
+      #contenedorExportar h3,
+      #contenedorExportar div {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        widows: 2;
+        orphans: 2;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background: #f0f4f8;
+      }
+      input,
+      button {
+        padding: 10px;
+        font-size: 16px;
+        border: 1.5px solid #ccc;
+        border-radius: 6px;
+        margin-right: 10px;
+      }
+      button {
+        background-color: #2563eb;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      button:hover {
+        background-color: #1e40af;
+      }
+      #resultado {
+        margin-top: 20px;
+        margin-bottom: 10px;
+        background: #e0e7ff;
+        padding: 15px;
+        border-radius: 8px;
+        color: #1e3a8a;
+        font-size: 1.1rem;
+        white-space: pre-wrap;
+        max-height: 130px;
+        overflow-y: auto;
+        /* Opcional: para que el ancho se ajuste */
+        width: 100%;
+        /* Opcional: para que no se expanda más allá de lo que cabe */
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: #f5f7fa;
+        padding: 20px;
+        max-width: auto;
+        margin: auto;
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+        margin: 5px 10px;
+      }
+      form {
+        margin-bottom: 20px;
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+      }
+      input[type="text"],
+      textarea {
+        width: 98.5%;
+        padding: 8px;
+        padding-right: 0;
+        margin-right: 0;
+        margin-top: 6px;
+        margin-bottom: 12px;
+        border: 1.5px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px;
+        resize: vertical;
+      }
+      button {
+        background-color: #2563eb;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        font-size: 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      button:hover {
+        background-color: #1e40af;
+      }
+      .nota {
+        background: white;
+        padding: 12px 15px;
+        margin-bottom: 12px;
+        border-radius: 8px;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+      .nota h3 {
+        margin: 0 0 8px 0;
+        color: #1e3a8a;
+      }
+      .nota p {
+        white-space: pre-wrap;
+        margin: 0;
+        color: #333;
+      }
+      .btn-borrar {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #dc2626;
+        border: none;
+        color: white;
+        border-radius: 4px;
+        padding: 4px 8px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+      }
+      .btn-borrar:hover {
+        background: #b91c1c;
+      }
+      #subtituloPrincipal {
+        text-align: center;
+        font-size: 20px;
+        margin: 0;
+        margin-bottom: 20px;
+        color: #333;
+        font-style: italic;
+      }
+      #tituloPrincipal {
+        margin-bottom: 0;
+      }
+      .etiqueta {
+        display: inline-block;
+        padding: 2px 8px;
+        margin-bottom: 5px;
+        border-radius: 12px;
+        font-size: 0.9em;
+        font-weight: bold;
+        color: white;
+      }
+
+      .etiqueta.versículo {
+        background-color: #4a90e2;
+      }
+      .etiqueta.idea {
+        background-color: #f5a623;
+      }
+      .etiqueta.importante {
+        background-color: #d0021b;
+      }
+      .etiqueta.cita {
+        background-color: #50e3c2;
+      }
+      .etiqueta.pregunta {
+        background-color: #9013fe;
+      }
+      .etiqueta.comentario {
+        background-color: #7ed321;
+      }
+      .etiqueta.conclusión {
+        background-color: #417505;
+      }
+      .flex {
+        display: flex;
+        gap: 20px;
+      }
+      .buscador_versiculo {
+        width: 50vw; /* Ocupa la mitad del ancho de la ventana */
+        max-width: 100%; /* Opcional para evitar que crezca más que su contenedor padre */
+        box-sizing: border-box; /* Para que padding/border no aumenten el ancho */
+      }
+      .barra_lateral {
+        margin: 15px;
+        width: 650px;
+        position: fixed; /* 👈 Esto lo fija en pantalla */
+        top: 0; /* Desde arriba */
+        left: 0; /* Pegado al borde izquierdo */
+        height: 100vh; /* 100% de la altura de la ventana */
+        z-index: 1000; /* Para que quede encima */
+      }
+      .notas_contenido {
+        width: 1000px;
+        margin-left: 670px;
+      }
+      .nota {
+        cursor: move;
+      }
+      .sortable-chosen {
+        box-shadow: 8px 8px 32px #e1e1e1;
+      }
+      .sortable-drag {
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 🌐 html 🌐 API documentación: https://docs-bible-api.netlify.app/api/versions -->
+    <div class="flex position_barra">
+      <div class="barra_lateral">
+        <div class="buscador_versiculo">
+          <!-- 🔎 Buscador de versiculos -->
+          <h1>Buscador de Versículos Bíblicos</h1>
+          <input
+            type="text"
+            id="versiculoInput"
+            placeholder="Ejemplo: Juan 3:16 o Juan 3:1-4" />
+          <button onclick="buscarVersiculo()">Buscar</button>
+          <div id="resultado"></div>
+        </div>
+
+        <!-- 🛠️🛠️🛠️ -->
+        <script>
+          async function buscarVersiculo() {
+            const input = document
+              .getElementById("versiculoInput")
+              .value.trim();
+            const resultado = document.getElementById("resultado");
+
+            if (!input) {
+              resultado.textContent =
+                "Por favor, ingresa un versículo en formato: Libro Capítulo:Versículo";
+              return;
+            }
+
+            const regex = /^(\w+)\s+(\d+):(\d+(-\d+)?)$/i;
+            const match = input.match(regex);
+
+            if (!match) {
+              resultado.textContent =
+                "Formato inválido. Usa: Libro Capítulo:Versículo (ejemplo: Juan 3:16 o Juan 3:1-4)";
+              return;
+            }
+
+            const libro = match[1].toLowerCase();
+            const capitulo = match[2];
+            const versiculo = match[3];
+
+            resultado.textContent = "Buscando...";
+
+            const url = `https://bible-api.deno.dev/api/read/rv1960/${libro}/${capitulo}/${versiculo}`;
+
+            try {
+              const response = await fetch(url);
+              if (!response.ok) {
+                resultado.textContent = `Error: ${response.status} ${response.statusText}`;
+                return;
+              }
+              const data = await response.json();
+
+              if (Array.isArray(data)) {
+                // Mostrar cada versículo con su número al inicio
+                const versosHTML = data
+                  .map((v) => `${v.number}. ${v.verse.replace(/\n/g, "<br>")}`)
+                  .join("<br><br>");
+                resultado.innerHTML = `<strong>${
+                  libro.charAt(0).toUpperCase() + libro.slice(1)
+                } ${capitulo}:${versiculo}</strong><br>${versosHTML}`;
+              } else if (data.verse) {
+                resultado.innerHTML = `<strong>${
+                  libro.charAt(0).toUpperCase() + libro.slice(1)
+                } ${capitulo}:${versiculo}</strong><br>${
+                  data.number
+                }. ${data.verse.replace(/\n/g, "<br>")}`;
+              } else {
+                resultado.textContent = "No se encontró el versículo.";
+              }
+            } catch (error) {
+              resultado.textContent = "Error al buscar el versículo.";
+              console.error(error);
+            }
+          }
+        </script>
+
+        <div>
+          <!-- 🌐 html 🌐 -->
+          <!--  📝 App de notas -->
+
+          <!-- 📝 Formulario para cambiar el título general -->
+
+          <div class="flex">
+            <div>
+              <form id="formTituloGeneral">
+                <label for="tituloGeneral">Título General:</label>
+                <input
+                  type="text"
+                  id="tituloGeneral"
+                  placeholder="Título general de los apuntes" />
+                <button type="submit">Actualizar Título</button>
+              </form>
+            </div>
+
+            <div>
+              <!-- 📝 Formulario para cambiar el subtítulo -->
+              <form id="formSubtitulo">
+                <label for="subtitulo">Subtítulo:</label>
+                <input
+                  type="text"
+                  id="subtitulo"
+                  placeholder="Subtítulo de las notas" />
+                <button type="submit">Actualizar Subtítulo</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- 📝 Formulario para agregar notas -->
+          <div>
+            <form id="formNota">
+              <label for="titulo">Nombre de la nota:</label>
+              <input
+                type="text"
+                id="titulo"
+                placeholder="Título de la nota"
+                required />
+
+              <label for="etiqueta">Etiqueta:</label>
+              <select id="etiqueta" required>
+                <option value="" disabled selected>
+                  Selecciona una etiqueta
+                </option>
+                <option value="versículo">📖 Versículo</option>
+                <option value="idea">💡 Idea</option>
+                <option value="importante">❗ Importante</option>
+                <option value="cita">📝 Cita</option>
+                <option value="pregunta">❓ Pregunta</option>
+                <option value="comentario">💬 Comentario</option>
+                <option value="conclusión">✔️ Conclusión</option>
+              </select>
+
+              <label for="contenido">Contenido:</label>
+              <textarea
+                id="contenido"
+                rows="5"
+                placeholder="Escribe tu nota aquí..."
+                required></textarea>
+
+              <button type="submit" id="btnSubmit">Agregar Nota</button>
+              <button
+                type="button"
+                id="btnCancelarEdicion"
+                style="display: none">
+                Cancelar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="notas_contenido">
+        <div id="contenedorExportar">
+          <h1 id="tituloPrincipal" class="descargar_en_pdf">
+            Apuntes Predicación
+          </h1>
+          <h2 id="subtituloPrincipal" class="descargar_en_pdf">
+            Subtítulo de las notas
+          </h2>
+
+          <!-- 🗂️ Aquí se listan las notas -->
+          <div id="listaNotas" class="descargar_en_pdf"></div>
+        </div>
+
+        <button id="descargar_pdf">Descargar PDF</button>
+        <button id="borrarStorage">Borrar Notas</button>
+
+        <!-- 🛠️ Script -->
+        <!-- Libreria stml12pdf para exportar en pdf -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+        <!-- Libreria para arrastrar las notas -->
+        <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+        <script>
+          // Referencias a elementos
+          const formNota = document.getElementById("formNota");
+          const listaNotas = document.getElementById("listaNotas");
+          const btnSubmit = document.getElementById("btnSubmit");
+          const btnCancelarEdicion =
+            document.getElementById("btnCancelarEdicion");
+
+          const formTituloGeneral =
+            document.getElementById("formTituloGeneral");
+          const formSubtitulo = document.getElementById("formSubtitulo");
+
+          const tituloPrincipal = document.getElementById("tituloPrincipal");
+          const subtituloPrincipal =
+            document.getElementById("subtituloPrincipal");
+
+          // Cargar notas y textos generales desde localStorage o usar valores por defecto
+          let notas = JSON.parse(localStorage.getItem("notasApp")) || [];
+          notas = notas.map((nota) => ({
+            titulo: nota.titulo || "",
+            contenido: nota.contenido || "",
+            etiqueta: nota.etiqueta || "comentario",
+          }));
+
+          let tituloGeneral =
+            localStorage.getItem("tituloGeneralApp") || "Apuntes Predicación";
+          let subtitulo =
+            localStorage.getItem("subtituloApp") || "Subtítulo de las notas";
+
+          // Mostrar títulos generales al cargar la página
+          tituloPrincipal.textContent = tituloGeneral;
+          subtituloPrincipal.textContent = subtitulo;
+
+          let indiceEditando = -1;
+
+          function capitalize(text) {
+            if (!text) return "";
+            return text.charAt(0).toUpperCase() + text.slice(1);
+          }
+
+          function mostrarIconoEtiqueta(etiqueta) {
+            switch (etiqueta) {
+              case "versículo":
+                return "📖";
+              case "idea":
+                return "💡";
+              case "importante":
+                return "❗";
+              case "cita":
+                return "📝";
+              case "pregunta":
+                return "❓";
+              case "comentario":
+                return "💬";
+              case "conclusión":
+                return "✔️";
+              default:
+                return "";
+            }
+          }
+
+          function mostrarNotas() {
+            listaNotas.innerHTML = "";
+            if (notas.length === 0) {
+              listaNotas.innerHTML = "<p>No hay notas aún. ¡Agrega una!</p>";
+              return;
+            }
+            notas.forEach((nota, index) => {
+              const notaDiv = document.createElement("div");
+              notaDiv.className = "nota";
+              notaDiv.setAttribute("draggable", "true");
+              notaDiv.dataset.index = index;
+              notaDiv.innerHTML = `
+      <div class="etiqueta ${nota.etiqueta}">${mostrarIconoEtiqueta(
+                nota.etiqueta
+              )} ${capitalize(nota.etiqueta)}</div>
+      <h3>${nota.titulo}</h3>
+      <p>${nota.contenido}</p>
+      <button class="no_exportar" onclick="editarNota(${index})">✏️ Editar</button>
+      <button class="no_exportar" onclick="borrarNota(${index})">Borrar</button>
+    `;
+              listaNotas.appendChild(notaDiv);
+            });
+          }
+
+          // Función para arrastrar notas
+          const contenedor = document.getElementById("listaNotas");
+
+          new Sortable(contenedor, {
+            draggable: ".nota",
+            ghostClass: "nota-ghost",
+            onStart(evt) {
+              evt.item.style.opacity = "1";
+            },
+            onEnd(evt) {
+              evt.item.style.opacity = "";
+
+              // REORDENAR EL ARRAY notas después de arrastrar
+              const nuevasNotas = [];
+              const items = listaNotas.querySelectorAll(".nota");
+              items.forEach((item) => {
+                const index = item.dataset.index;
+                nuevasNotas.push(notas[index]);
+              });
+              notas = nuevasNotas;
+              guardarNotas();
+              mostrarNotas(); // Redibujar para actualizar los indices
+            },
+          });
+
+          function guardarNotas() {
+            localStorage.setItem("notasApp", JSON.stringify(notas));
+          }
+
+          function borrarNota(index) {
+            if (confirm("¿Seguro que quieres borrar esta nota?")) {
+              notas.splice(index, 1);
+              guardarNotas();
+              mostrarNotas();
+            }
+          }
+
+          function editarNota(index) {
+            const nota = notas[index];
+            document.getElementById("titulo").value = nota.titulo;
+            document.getElementById("contenido").value = nota.contenido;
+            document.getElementById("etiqueta").value = nota.etiqueta;
+
+            indiceEditando = index;
+            btnSubmit.textContent = "Guardar Cambios";
+            btnCancelarEdicion.style.display = "inline";
+          }
+
+          btnCancelarEdicion.addEventListener("click", () => {
+            formNota.reset();
+            indiceEditando = -1;
+            btnSubmit.textContent = "Agregar Nota";
+            btnCancelarEdicion.style.display = "none";
+          });
+
+          formNota.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const titulo = document.getElementById("titulo").value.trim();
+            const contenido = document.getElementById("contenido").value.trim();
+            const etiqueta = document.getElementById("etiqueta").value;
+
+            if (!titulo || !contenido || !etiqueta) return;
+
+            if (indiceEditando === -1) {
+              notas.push({ titulo, contenido, etiqueta });
+            } else {
+              notas[indiceEditando] = { titulo, contenido, etiqueta };
+              indiceEditando = -1;
+              btnSubmit.textContent = "Agregar Nota";
+              btnCancelarEdicion.style.display = "none";
+            }
+
+            guardarNotas();
+            mostrarNotas();
+            formNota.reset();
+          });
+
+          // Formularios para título y subtítulo general
+          formTituloGeneral.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const nuevoTitulo = document
+              .getElementById("tituloGeneral")
+              .value.trim();
+            if (nuevoTitulo) {
+              tituloGeneral = nuevoTitulo;
+              tituloPrincipal.textContent = tituloGeneral;
+              localStorage.setItem("tituloGeneralApp", tituloGeneral);
+              formTituloGeneral.reset();
+            }
+          });
+
+          formSubtitulo.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const nuevoSubtitulo = document
+              .getElementById("subtitulo")
+              .value.trim();
+            if (nuevoSubtitulo) {
+              subtitulo = nuevoSubtitulo;
+              subtituloPrincipal.textContent = subtitulo;
+              localStorage.setItem("subtituloApp", subtitulo);
+              formSubtitulo.reset();
+            }
+          });
+
+          // Hacer funciones globales para botones inline
+          window.borrarNota = borrarNota;
+          window.editarNota = editarNota;
+
+          // Mostrar notas al inicio
+          mostrarNotas();
+
+          /////////////////// Btn para descargar las notas en un pdf ///////////////////
+          const btnExportar = document.getElementById("descargar_pdf");
+          console.log("btnExportar:", btnExportar);
+
+          btnExportar.addEventListener("click", () => {
+            const contenedorOriginal =
+              document.getElementById("contenedorExportar");
+            const contenedorTemp = contenedorOriginal.cloneNode(true);
+
+            // Elimina botones u otros elementos que no quieras exportar
+            contenedorTemp
+              .querySelectorAll(".no_exportar")
+              .forEach((el) => el.remove());
+
+            // Opciones completas para html2pdf
+            const opt = {
+              margin: 0.5, // margen en pulgadas
+              filename: "documento.pdf",
+              image: { type: "jpeg", quality: 0.98 },
+              html2canvas: { scale: 2 },
+              jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+            };
+
+            html2pdf().set(opt).from(contenedorTemp).save();
+          });
+
+          // Borrar memoria y notas
+          const btnBorrarStorage = document.getElementById("borrarStorage");
+
+          btnBorrarStorage.addEventListener("click", () => {
+            if (confirm("¿Seguro que quieres borrar todas las notas?")) {
+              // Limpia las notas en memoria y en localStorage
+              notas = [];
+              localStorage.removeItem("notasApp");
+
+              // Limpia el título y subtítulo en memoria y en localStorage
+              tituloGeneral = "";
+              subtitulo = "";
+              localStorage.removeItem("tituloGeneralApp");
+              localStorage.removeItem("subtituloApp");
+
+              // Limpia el HTML donde se muestran las notas y los títulos
+              listaNotas.innerHTML =
+                "<p>No hay notas aún. ¡Agrega una arriba!</p>";
+              tituloPrincipal.textContent = "";
+              subtituloPrincipal.textContent = "";
+            }
+          });
+        </script>
+      </div>
+    </div>
+    <!-- Fin div.flex -->
+  </body>
+</html>
